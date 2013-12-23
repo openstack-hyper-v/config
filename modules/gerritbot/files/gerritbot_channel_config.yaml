@@ -48,6 +48,8 @@ openstack-infra:
       - template
       - overview
       - logstash
+      - gearman-plugin
+      - sysadmin-codereview
       - debian/sid
 
 openstack-doc:
@@ -170,7 +172,9 @@ openstack-nova:
       - patchset-created
       - x-vrif-minus-2
     projects:
+      - openstack/gantt
       - openstack/nova
+      - openstack/python-ganttclient
       - openstack/python-novaclient
     branches:
       - master
@@ -217,6 +221,7 @@ puppet-openstack:
       - stackforge/puppet-neutron
       - stackforge/puppet-nova
       - stackforge/puppet-openstack
+      - stackforge/puppet_openstack_builder
       - stackforge/puppet-openstack_dev_env
       - stackforge/puppet-swift
       - stackforge/puppet-tempest
@@ -313,6 +318,7 @@ openstack-swift:
 
 openstack-state-management:
     events:
+      - patchset-created
       - change-merged
       - x-vrif-minus-2
     projects:
@@ -399,6 +405,7 @@ openstack-climate:
     projects:
       - stackforge/climate
       - stackforge/climate-nova
+      - stackforge/python-climateclient
     branches:
       - master
 
@@ -442,3 +449,24 @@ milk-dev:
       - stackforge/milk
     branches:
       - master
+
+openstack-entropy:
+    events:
+      - patchset-created
+      - change-merged
+      - x-vrif-minus-2
+    projects:
+      - stackforge/entropy
+    branches:
+      - master
+
+packstack-dev:
+    events:
+      - patchset-created
+      - change-merged
+      - x-vrif-minus-2
+    projects:
+      - stackforge/packstack
+    branches:
+      - master
+      - grizzly

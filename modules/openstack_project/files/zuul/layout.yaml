@@ -31,7 +31,7 @@ pipelines:
           approval:
             - approved: 1
         - event: comment-added
-          comment_filter: (?i)^\s*reverify(( (?:bug|lp)[\s#:]*(\d+))|( no bug))\s*$
+          comment_filter: (?i)^\s*reverify( (?:bug|lp)[\s#:]*(\d+))\s*$
     start:
       gerrit:
         verified: 0
@@ -109,8 +109,19 @@ jobs:
     parameter-function: set_log_url
   - name: ^.*(dsvm|devstack-vm).*$
     parameter-function: single_use_node
+  - name: gate-config-layout
+    parameter-function: single_use_node
+  - name: ci-docs
+    parameter-function: single_use_node
+  - name: gate-ci-docs
+    parameter-function: single_use_node
+  - name: ^(gate|check)-requirements-integration-dsvm$
+    branch: ^(?!stable/grizzly).*$
   - name: ^(gate|check)-tempest-dsvm-neutron-pg$
     branch: ^(?!stable/grizzly).*$
+  - name: check-devstack-dsvm-neutron
+    branch: ^(?!stable/grizzly).*$
+    voting: false
   - name: ^(gate|check)-tempest-dsvm-neutron-isolated$
     branch: ^(?!stable/grizzly).*$
   - name: ^(gate|check)-tempest-dsvm-neutron-pg-isolated$
@@ -201,6 +212,7 @@ jobs:
     voting: false
     failure-message: Jenkins XML output has changed.
     success-message: Jenkins XML output is unchanged.
+    parameter-function: single_use_node
 # Continous publishing from master of the following documentation targets:
   - name: openstack-admin-guide-cloud
     branch: ^master$
@@ -325,11 +337,13 @@ jobs:
     voting: false
   - name: gate-rubick-python33
     voting: false
-  - name: gate-solum-devstack-dsvm
-    voting: false
   - name: gate-manila-devstack-dsvm
     voting: false
   - name: gate-climate-devstack-dsvm
+    voting: false
+  - name: check-projects-yaml-alphabetized
+    voting: false
+  - name: gate-storyboard-python26
     voting: false
 # puppet-openstack targets
   - name: gate-puppet-vswitch-puppet-lint
@@ -539,11 +553,13 @@ projects:
       - gate-config-puppet-lint
       - gate-config-puppet-syntax
       - gate-ci-docs
+      - check-projects-yaml-alphabetized
     gate:
       - gate-config-layout
       - gate-config-pep8
       - gate-config-puppet-lint
       - gate-config-puppet-syntax
+      - check-projects-yaml-alphabetized
     post:
       - ci-docs
 
@@ -625,8 +641,11 @@ projects:
   - name: openstack-infra/storyboard
     check:
       - gate-storyboard-pep8
+      - gate-storyboard-python26
+      - gate-storyboard-python27
     gate:
       - gate-storyboard-pep8
+      - gate-storyboard-python27
     post:
       - storyboard-branch-tarball
     pre-release:
@@ -708,6 +727,50 @@ projects:
       - periodic-cinder-docs-havana
       - periodic-cinder-python26-havana
       - periodic-cinder-python27-havana
+
+  - name: openstack/gantt
+    check:
+      - gate-gantt-requirements
+      - gate-gantt-pep8
+      - gate-gantt-docs
+      - gate-gantt-python26
+      - gate-gantt-python27
+      - check-tempest-dsvm-full
+      - check-tempest-dsvm-postgres-full
+      - check-tempest-dsvm-neutron
+      - gate-tempest-dsvm-large-ops
+      - gate-tempest-dsvm-neutron-large-ops
+      - check-grenade-dsvm
+      - gate-devstack-dsvm-cells
+      - gate-gantt-pylint
+    gate:
+      - gate-gantt-requirements
+      - gate-gantt-docs
+      - gate-gantt-pep8
+      - gate-gantt-python26
+      - gate-gantt-python27
+      - gate-tempest-dsvm-full
+      - gate-tempest-dsvm-postgres-full
+      - gate-tempest-dsvm-neutron
+      - gate-tempest-dsvm-large-ops
+      - gate-tempest-dsvm-neutron-large-ops
+      - gate-grenade-dsvm
+    experimental:
+      - gate-grenade-dsvm-forward
+      - gate-tempest-dsvm-neutron-full
+    post:
+      - gantt-branch-tarball
+      - gantt-coverage
+      - gantt-docs
+      - gantt-upstream-translation-update
+    pre-release:
+      - gantt-tarball
+    release:
+      - gantt-tarball
+      - gantt-docs
+      - gantt-merge-release-tags
+    periodic:
+      - gantt-propose-translation-update
 
   - name: openstack/glance
     check:
@@ -1120,6 +1183,7 @@ projects:
       - check-tempest-dsvm-neutron-pg-isolated
       - gate-tempest-dsvm-neutron-large-ops
       - check-grenade-dsvm-neutron
+      - check-devstack-dsvm-neutron
     gate:
       - gate-neutron-requirements
       - gate-neutron-docs
@@ -1300,6 +1364,46 @@ projects:
           - post-mirror-python27
           - post-mirror-python33
       - python-cinderclient-docs
+
+  - name: openstack/python-ganttclient
+    check:
+      - gate-python-ganttclient-requirements
+      - gate-python-ganttclient-pep8
+      - gate-python-ganttclient-docs
+      - gate-python-ganttclient-python26
+      - gate-python-ganttclient-python27
+      - check-tempest-dsvm-full
+      - check-tempest-dsvm-postgres-full
+      - check-tempest-dsvm-neutron
+      - gate-tempest-dsvm-large-ops
+      - gate-tempest-dsvm-neutron-large-ops
+      - check-grenade-dsvm
+    gate:
+      - gate-python-ganttclient-requirements
+      - gate-python-ganttclient-docs
+      - gate-python-ganttclient-pep8
+      - gate-python-ganttclient-python26
+      - gate-python-ganttclient-python27
+      - gate-tempest-dsvm-full
+      - gate-tempest-dsvm-postgres-full
+      - gate-tempest-dsvm-neutron
+      - gate-tempest-dsvm-large-ops
+      - gate-tempest-dsvm-neutron-large-ops
+      - gate-grenade-dsvm
+    experimental:
+      - gate-grenade-dsvm-forward
+      - gate-devstack-dsvm-cells
+    post:
+      - python-ganttclient-branch-tarball
+      - python-ganttclient-coverage
+    pre-release:
+      - python-ganttclient-tarball
+    release:
+      - python-ganttclient-tarball:
+        - python-ganttclient-pypi-upload:
+          - post-mirror-python26
+          - post-mirror-python27
+      - python-ganttclient-docs
 
   - name: openstack/python-glanceclient
     check:
@@ -1684,6 +1788,7 @@ projects:
       - check-grenade-dsvm
       - check-grenade-dsvm-forward
       - check-swift-dsvm-functional
+      - check-devstack-dsvm-neutron
     gate:
       - gate-devstack-bash8
       - gate-tempest-dsvm-full
@@ -1789,6 +1894,9 @@ projects:
       - gate-grenade-dsvm-forward
       - gate-devstack-dsvm-cells
       - gate-tempest-dsvm-neutron-full
+      - gate-tempest-dsvm-savanna-full
+      - gate-tempest-dsvm-savanna-postgres-full
+      - gate-tempest-dsvm-savanna-neutron
     post:
       - tempest-docs
       - tempest-branch-tarball
@@ -1868,6 +1976,22 @@ projects:
     gate:
       - gate-congress-pep8
       - gate-congress-python27
+
+  - name: stackforge/milk
+    check:
+      - gate-milk-docs
+      - gate-milk-pep8
+      - gate-milk-python26
+      - gate-milk-python27
+      - gate-milk-python33
+    gate:
+      - gate-milk-docs
+      - gate-milk-pep8
+      - gate-milk-python26
+      - gate-milk-python27
+      - gate-milk-python33
+    post:
+      - milk-coverage
 
   - name: stackforge/MRaaS
     check:
@@ -3727,6 +3851,7 @@ projects:
       - gate-stevedore-python33
     post:
       - stevedore-branch-tarball
+      - hook-stevedore-rtfd
     pre-release:
       - stevedore-tarball
       - hook-stevedore-rtfd
@@ -3738,7 +3863,40 @@ projects:
           - post-mirror-python33
       - hook-stevedore-rtfd
 
+  - name: stackforge/cliff
+    check:
+      - gate-cliff-pep8
+      - gate-cliff-python26
+      - gate-cliff-python27
+      - gate-cliff-python33
+      - gate-cliff-pypy
+    gate:
+      - gate-cliff-pep8
+      - gate-cliff-python26
+      - gate-cliff-python27
+      - gate-cliff-python33
+      - gate-cliff-pypy
+    post:
+      - cliff-branch-tarball
+      - hook-cliff-rtfd
+    pre-release:
+      - cliff-tarball
+      - hook-cliff-rtfd
+    release:
+      - cliff-tarball:
+        - cliff-pypi-upload:
+          - post-mirror-python26
+          - post-mirror-python27
+          - post-mirror-python33
+      - hook-cliff-rtfd
+
   - name: openstack-infra/groups
+    check:
+      - gate-noop
+    gate:
+      - gate-noop
+
+  - name: openstack-infra/openstackid
     check:
       - gate-noop
     gate:
@@ -3989,8 +4147,18 @@ projects:
       - gate-release-tools-python27
       - gate-release-tools-pypy
 
-  - name: stackforge/milk
+  - name: stackforge/entropy
     check:
-      - gate-noop
+      - gate-entropy-docs
+      - gate-entropy-pep8
+      - gate-entropy-python26
+      - gate-entropy-python27
+      - gate-entropy-python33
     gate:
-      - gate-noop
+      - gate-entropy-docs
+      - gate-entropy-pep8
+      - gate-entropy-python26
+      - gate-entropy-python27
+      - gate-entropy-python33
+    post:
+      - entropy-coverage

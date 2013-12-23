@@ -53,7 +53,7 @@ providers:
       - name: bare-precise
         base-image: 'Ubuntu 12.04 LTS (Precise Pangolin)'
         min-ram: 8192
-        name-filter: 'Standard'
+        name-filter: 'Performance'
         setup: prepare_node_bare.sh
         username: jenkins
         private-key: /home/nodepool/.ssh/id_rsa
@@ -73,6 +73,13 @@ providers:
         min-ram: 8192
         name-filter: 'Performance'
         setup: prepare_node_devstack.sh
+        username: jenkins
+        private-key: /home/nodepool/.ssh/id_rsa
+      - name: bare-precise
+        base-image: 'Ubuntu 12.04 LTS (Precise Pangolin)'
+        min-ram: 8192
+        name-filter: 'Performance'
+        setup: prepare_node_bare.sh
         username: jenkins
         private-key: /home/nodepool/.ssh/id_rsa
   - name: hpcloud-az1
@@ -156,7 +163,7 @@ providers:
     images:
       - name: devstack-precise-check
         base-image: 'Ubuntu Precise 12.04 LTS Server 64-bit 20121026 (b)'
-        min-ram: 16384
+        min-ram: 30720
         setup: prepare_node_devstack.sh
         username: jenkins
         private-key: /home/nodepool/.ssh/id_rsa
@@ -186,9 +193,9 @@ targets:
       credentials-id: '<%= jenkins_credentials_id %>'
     images:
       - name: bare-precise
-        min-ready: 2
+        min-ready: 3
         providers:
-          - name: rax-ord
+          - name: rax-iad
       - name: devstack-precise
         min-ready: 20
         providers:
@@ -213,6 +220,10 @@ targets:
       apikey: '<%= jenkins_api_key %>'
       credentials-id: '<%= jenkins_credentials_id %>'
     images:
+      - name: bare-precise
+        min-ready: 3
+        providers:
+          - name: rax-iad
       - name: devstack-precise
         min-ready: 20
         providers:

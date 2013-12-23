@@ -291,14 +291,22 @@ node 'logstash.openstack.org' {
     sysadmins                       => hiera('sysadmins'),
     elasticsearch_nodes             => $elasticsearch_nodes,
     gearman_workers                 => [
-      'logstash-worker1.openstack.org',
-      'logstash-worker2.openstack.org',
-      'logstash-worker3.openstack.org',
-      'logstash-worker4.openstack.org',
-      'logstash-worker5.openstack.org',
-      'logstash-worker6.openstack.org',
-      'logstash-worker7.openstack.org',
-      'logstash-worker8.openstack.org',
+      'logstash-worker01.openstack.org',
+      'logstash-worker02.openstack.org',
+      'logstash-worker03.openstack.org',
+      'logstash-worker04.openstack.org',
+      'logstash-worker05.openstack.org',
+      'logstash-worker06.openstack.org',
+      'logstash-worker07.openstack.org',
+      'logstash-worker08.openstack.org',
+      'logstash-worker09.openstack.org',
+      'logstash-worker10.openstack.org',
+      'logstash-worker11.openstack.org',
+      'logstash-worker12.openstack.org',
+      'logstash-worker13.openstack.org',
+      'logstash-worker14.openstack.org',
+      'logstash-worker15.openstack.org',
+      'logstash-worker16.openstack.org',
     ],
     discover_nodes                  => [
       'elasticsearch.openstack.org:9200',
@@ -332,14 +340,22 @@ node /^elasticsearch\d*\.openstack\.org$/ {
     elasticsearch_nodes   => $elasticsearch_nodes,
     elasticsearch_clients => [
       'logstash.openstack.org',
-      'logstash-worker1.openstack.org',
-      'logstash-worker2.openstack.org',
-      'logstash-worker3.openstack.org',
-      'logstash-worker4.openstack.org',
-      'logstash-worker5.openstack.org',
-      'logstash-worker6.openstack.org',
-      'logstash-worker7.openstack.org',
-      'logstash-worker8.openstack.org',
+      'logstash-worker01.openstack.org',
+      'logstash-worker02.openstack.org',
+      'logstash-worker03.openstack.org',
+      'logstash-worker04.openstack.org',
+      'logstash-worker05.openstack.org',
+      'logstash-worker06.openstack.org',
+      'logstash-worker07.openstack.org',
+      'logstash-worker08.openstack.org',
+      'logstash-worker09.openstack.org',
+      'logstash-worker10.openstack.org',
+      'logstash-worker11.openstack.org',
+      'logstash-worker12.openstack.org',
+      'logstash-worker13.openstack.org',
+      'logstash-worker14.openstack.org',
+      'logstash-worker15.openstack.org',
+      'logstash-worker16.openstack.org',
     ],
     discover_nodes        => $elasticsearch_nodes,
   }
@@ -388,6 +404,13 @@ node 'summit.openstack.org' {
 # A machine to serve static content.
 node 'static.openstack.org' {
   class { 'openstack_project::static':
+    sysadmins => hiera('sysadmins'),
+  }
+}
+
+# A machine to serve various project status updates.
+node 'status.openstack.org' {
+  class { 'openstack_project::status':
     sysadmins                       => hiera('sysadmins'),
     reviewday_rsa_key_contents      => hiera('reviewday_rsa_key_contents'),
     reviewday_rsa_pubkey_contents   => hiera('reviewday_rsa_pubkey_contents'),

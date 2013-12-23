@@ -88,6 +88,10 @@
 - project: openstack-infra/odsreg
   upstream: git://github.com/ttx/odsreg.git
   description: OpenStack Design Summit session management system
+- project: openstack-infra/openstackid
+  description: Authentication system for the OpenStack Foundation site
+  launchpad: openstack-org
+  upstream: git://github.com/smarcet/openstackid.git
 - project: openstack-infra/os-loganalyze
   launchpad: openstack-ci
   description: log analyzer tools for logs.openstack.org
@@ -140,16 +144,23 @@
   upstream: git://github.com/pabelanger/zuul-packaging.git
   description: Zuul packaging
 - project: openstack/api-site
+  launchpad: openstack-api-site
 - project: openstack/ceilometer
 - project: openstack/cinder
 - project: openstack/compute-api
+  launchpad: openstack-api-site
 - project: openstack/database-api
+  launchpad: openstack-api-site
   description: Doc repo for trove project
 - project: openstack/diskimage-builder
   description: Image building tools for OpenStack
 - project: openstack/django_openstack_auth
+  launchpad: django-openstack-auth
   description: A Django authentication backend for use with the OpenStack Keystone Identity backend.
   upstream: git://github.com/gabrielhurley/django_openstack_auth.git
+- project: openstack/gantt
+  description: Common scheduler for OpenStack.
+  upstream: git://github.com/n0ano/gantt.git
 - project: openstack/glance
 - project: openstack/governance
   description: Openstack Technical Committee Decisions
@@ -159,25 +170,31 @@
 - project: openstack/heat-templates
 - project: openstack/horizon
 - project: openstack/identity-api
+  launchpad: openstack-api-site
 - project: openstack/image-api
+  launchpad: openstack-api-site
 - project: openstack/ironic
   description: A service for managing and provisioning Bare Metal servers.
   upstream: git://github.com/devananda/ironic.git
 - project: openstack/keystone
 - project: openstack/marconi
 - project: openstack/netconn-api
+  launchpad: openstack-api-site
 - project: openstack/neutron
 - project: openstack/nova
 - project: openstack/object-api
+  launchpad: openstack-api-site
 - project: openstack/openstack
   upstream: git://github.com/emonty/openstack
 - project: openstack/openstack-doc-tools
+  launchpad: openstack-manuals
   description: Tools used by OpenStack Documentation
   upstream: git://github.com/ajaeger/openstack-doc-tools.git
 - project: openstack/openstack-chef
 - project: openstack/openstack-manuals
 - project: openstack/openstack-planet
 - project: openstack/operations-guide
+  launchpad: openstack-manuals
   upstream: git://github.com/jeblair/openstack-ops
   description: OpenStack Operations Guide
 - project: openstack/os-apply-config
@@ -187,6 +204,7 @@
 - project: openstack/os-refresh-config
   description: Restart services and coordinate data migration on Heat config changes.
 - project: openstack/oslo-incubator
+  launchpad: oslo
   description: Part of OpenStack's Oslo project. New Oslo APIs go through an incubation phase in this repository before being released as part of a proper Python library.
 - project: openstack/oslo.config
 - project: openstack/oslo.messaging
@@ -200,6 +218,10 @@
 - project: openstack/python-ceilometerclient
   upstream: git://github.com/asalkeld/python-ceilometerclient.git
 - project: openstack/python-cinderclient
+- project: openstack/python-ganttclient
+  description: Client code for the common scheduler for OpenStack.
+  acl-config: /home/gerrit2/acls/openstack/gantt.config
+  upstream: git://github.com/n0ano/ganttclient.git
 - project: openstack/python-glanceclient
 - project: openstack/python-heatclient
 - project: openstack/python-ironicclient
@@ -222,12 +244,15 @@
   description: Savanna aims to provide users with simple means to provision a Hadoop cluster by specifying several parameters like Hadoop version, cluster topology, nodes hardware details and a few more.
   acl-config: /home/gerrit2/acls/openstack/savanna.config
 - project: openstack/savanna-dashboard
+  launchpad: savanna
   description: Savanna Horizon plugin.
   acl-config: /home/gerrit2/acls/openstack/savanna.config
 - project: openstack/savanna-extra
+  launchpad: savanna
   description: Repo for Savanna-related utils.
   acl-config: /home/gerrit2/acls/openstack/savanna.config
 - project: openstack/savanna-image-elements
+  launchpad: savanna
   description: Disk image elements for Savanna
   acl-config: /home/gerrit2/acls/openstack/savanna.config
 - project: openstack/swift
@@ -236,10 +261,13 @@
   upstream: git://github.com/jeblair/swift-bench.git
 - project: openstack/tempest
 - project: openstack/tripleo-heat-templates
+  launchpad: tripleo
   description: Heat templates for deploying OpenStack
 - project: openstack/tripleo-image-elements
+  launchpad: tripleo
   description: Disk image elements for deployment images of Openstack
 - project: openstack/tripleo-incubator
+  launchpad: tripleo
   description: The TripleO incubator where unformed things are experimented with.
 - project: openstack/trove
 - project: openstack/trove-integration
@@ -250,6 +278,7 @@
   description: The UI component for Tuskar
   upstream: git://github.com/tuskar/tuskar-ui.git
 - project: openstack/volume-api
+  launchpad: openstack-api-site
 - project: stackforge/anvil
   description: A set of python scripts and utilities to forge raw openstack into a productive tool!
   upstream: git://github.com/yahoo/Openstack-Anvil.git
@@ -288,45 +317,58 @@
   upstream: git://github.com/pballand/congress.git
   acl-config: /home/gerrit2/acls/stackforge/congress.config
 - project: stackforge/cookbook-openstack-block-storage
+  launchpad: openstack-chef
   description: Chef Cookbook - OpenStack Block Storage
   acl-config: /home/gerrit2/acls/stackforge/chef-cookbooks.config
 - project: stackforge/cookbook-openstack-common
+  launchpad: openstack-chef
   description: Chef Cookbook - common OpenStack configuration
   acl-config: /home/gerrit2/acls/stackforge/chef-cookbooks.config
 - project: stackforge/cookbook-openstack-compute
+  launchpad: openstack-chef
   description: Chef Cookbook - OpenStack Compute
   acl-config: /home/gerrit2/acls/stackforge/chef-cookbooks.config
 - project: stackforge/cookbook-openstack-dashboard
+  launchpad: openstack-chef
   description: Chef Cookbook - OpenStack Dashboard
   acl-config: /home/gerrit2/acls/stackforge/chef-cookbooks.config
 - project: stackforge/cookbook-openstack-identity
+  launchpad: openstack-chef
   description: Chef Cookbook - OpenStack Identity
   acl-config: /home/gerrit2/acls/stackforge/chef-cookbooks.config
 - project: stackforge/cookbook-openstack-image
+  launchpad: openstack-chef
   description: Chef Cookbook - OpenStack Image
   acl-config: /home/gerrit2/acls/stackforge/chef-cookbooks.config
 - project: stackforge/cookbook-openstack-metering
+  launchpad: openstack-chef
   description: Chef Cookbook - OpenStack Metering
   acl-config: /home/gerrit2/acls/stackforge/chef-cookbooks.config
 - project: stackforge/cookbook-openstack-network
+  launchpad: openstack-chef
   description: Chef Cookbook - OpenStack Network
   acl-config: /home/gerrit2/acls/stackforge/chef-cookbooks.config
 - project: stackforge/cookbook-openstack-object-storage
+  launchpad: openstack-chef
   description: Chef Cookbook - OpenStack Object Storage
   acl-config: /home/gerrit2/acls/stackforge/chef-cookbooks.config
 - project: stackforge/cookbook-openstack-ops-database
+  launchpad: openstack-chef
   description: Chef Cookbook - Support Cookbook for Database
   acl-config: /home/gerrit2/acls/stackforge/chef-cookbooks.config
   upstream: git://github.com/mattray/cookbook-openstack-ops-database.git
 - project: stackforge/cookbook-openstack-ops-messaging
+  launchpad: openstack-chef
   description: Chef Cookbook - Support Cookbook for Messaging
   acl-config: /home/gerrit2/acls/stackforge/chef-cookbooks.config
   upstream: git://github.com/mattray/cookbook-openstack-ops-messaging.git
 - project: stackforge/cookbook-openstack-orchestration
+  launchpad: openstack-chef
   description: Chef Cookbook - OpenStack Orchestration
   acl-config: /home/gerrit2/acls/stackforge/chef-cookbooks.config
 - project: stackforge/designate
 - project: stackforge/fuel-astute
+  launchpad: fuel
   description: Fuel orchestrator
   upstream: git://github.com/Mirantis/astute.git
   acl-config: /home/gerrit2/acls/stackforge/fuel.config
@@ -346,20 +388,25 @@
   upstream: git://github.com/Mirantis/devops.git
   acl-config: /home/gerrit2/acls/stackforge/fuel.config
 - project: stackforge/fuel-main
+  launchpad: fuel
   description: Fuel is the control plane for installing and managing OpenStack. It is capable of doing bare metal provisioning of physical nodes, installing OpenStack on them, and much more.
   upstream: git://github.com/Mirantis/fuel-main.git
   acl-config: /home/gerrit2/acls/stackforge/fuel.config
 - project: stackforge/fuel-ostf
+  launchpad: fuel
   upstream: git://github.com/Mirantis/fuel-ostf-tests.git
   acl-config: /home/gerrit2/acls/stackforge/fuel.config
 - project: stackforge/fuel-ostf-plugin
+  launchpad: fuel
   description: Obsolete repo, please, take a look at fuel-ostf
   acl-config: /home/gerrit2/acls/stackforge/fuel.config
 - project: stackforge/fuel-provision
+  launchpad: fuel
   description: Fuel provisioning system.
   upstream: git://github.com/Mirantis/fuel-provision.git
   acl-config: /home/gerrit2/acls/stackforge/fuel.config
 - project: stackforge/fuel-web
+  launchpad: fuel
   description: Fuel UI
   upstream: git://github.com/Mirantis/fuelweb.git
   acl-config: /home/gerrit2/acls/stackforge/fuel.config
@@ -387,33 +434,43 @@
   upstream: git://github.com/rakhmerov/mistral.git
   acl-config: /home/gerrit2/acls/stackforge/mistral.config
 - project: stackforge/murano-agent
+  launchpad: murano
   upstream: git://github.com/Mirantis/murano-agent.git
   acl-config: /home/gerrit2/acls/stackforge/murano.config
 - project: stackforge/murano-api
+  launchpad: murano
   upstream: git://github.com/Mirantis/murano-api.git
   acl-config: /home/gerrit2/acls/stackforge/murano.config
 - project: stackforge/murano-common
+  launchpad: murano
   upstream: git://github.com/sergmelikyan/murano-common.git
   acl-config: /home/gerrit2/acls/stackforge/murano.config
 - project: stackforge/murano-conductor
+  launchpad: murano
   upstream: git://github.com/Mirantis/murano-conductor.git
   acl-config: /home/gerrit2/acls/stackforge/murano.config
 - project: stackforge/murano-dashboard
+  launchpad: murano
   upstream: git://github.com/Mirantis/murano-dashboard.git
   acl-config: /home/gerrit2/acls/stackforge/murano.config
 - project: stackforge/murano-deployment
+  launchpad: murano
   upstream: git://github.com/Mirantis/murano-deployment.git
   acl-config: /home/gerrit2/acls/stackforge/murano.config
 - project: stackforge/murano-docs
+  launchpad: murano
   upstream: git://github.com/Mirantis/murano-docs.git
   acl-config: /home/gerrit2/acls/stackforge/murano.config
 - project: stackforge/murano-metadataclient
+  launchpad: murano
   upstream: git://github.com/EkaterinaFedorova/python-metadataclient.git
   acl-config: /home/gerrit2/acls/stackforge/murano.config
 - project: stackforge/murano-repository
+  launchpad: murano
   upstream: git://github.com/EkaterinaFedorova/murano-repository
   acl-config: /home/gerrit2/acls/stackforge/murano.config
 - project: stackforge/murano-tests
+  launchpad: murano
   upstream: git://github.com/Mirantis/murano-tests.git
   acl-config: /home/gerrit2/acls/stackforge/murano.config
 - project: stackforge/novaimagebuilder
@@ -426,6 +483,7 @@
   upstream: https://github.com/samu4924/opencafe
   description: Common Automation Framework Engine. Core driver for CloudCAFE
 - project: stackforge/openstack-chef-repo
+  launchpad: openstack-chef
   description: Example Chef Repo that sets up an OpenStack Deployment
   acl-config: /home/gerrit2/acls/stackforge/chef-cookbooks.config
 - project: stackforge/openvz-nova-driver
@@ -485,6 +543,7 @@
   acl-config: /home/gerrit2/acls/stackforge/puppet-modules.config
   upstream: git://github.com/puppetlabs/puppetlabs-openstack.git
 - project: stackforge/puppet-openstack_dev_env
+  launchpad: puppet-openstack
   description: OpenStack Puppet Dev Environment
   acl-config: /home/gerrit2/acls/stackforge/puppet-modules.config
   upstream: git://github.com/puppetlabs/puppetlabs-openstack_dev_env.git
@@ -493,6 +552,7 @@
   description: Data model for deploying multiple openstack reference architectures
   acl-config: /home/gerrit2/acls/stackforge/puppet-modules.config
 - project: stackforge/puppet-savanna
+  launchpad: savanna
   description: Savanna Puppet Module
   acl-config: /home/gerrit2/acls/openstack/savanna.config
 - project: stackforge/puppet-swift
@@ -523,6 +583,7 @@
 - project: stackforge/python-manilaclient
   upstream: git://github.com/bswartz/python-manilaclient.git
 - project: stackforge/python-muranoclient
+  launchpad: murano
   upstream: git://github.com/Mirantis/python-muranoclient.git
   acl-config: /home/gerrit2/acls/stackforge/murano.config
 - project: stackforge/python-solumclient
@@ -566,5 +627,12 @@
   description: Web Service Made Easy (WSME) simplify the writing of REST web services by providing simple yet powerful typing which removes the need to directly manipulate the request and the response objects.
   upstream: git://github.com/ryanpetrello/wsme.git
 - project: stackforge/stevedore
+  launchpad: python-stevedore
   description: Manage dynamic plugins for Python applications
   upstream: git://github.com/dreamhost/stevedore.git
+- project: stackforge/entropy
+  description: A framework for Audit/Repair scripts for openstack
+- project: stackforge/cliff
+  description: Command Line Interface Formulation Framework
+  upstream: git://github.com/dreamhost/cliff.git
+  launchpad: python-cliff

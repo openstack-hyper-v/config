@@ -1,4 +1,18 @@
 - project:
+    name: gantt
+    github-org: openstack
+    node: precise
+    tarball-site: tarballs.openstack.org
+    doc-publisher-site: docs.openstack.org
+
+    jobs:
+      - python-jobs
+      - openstack-publish-jobs
+      - gate-{name}-pylint
+      - translation-jobs
+
+
+- project:
     name: mistral
     github-org: stackforge
     node: precise
@@ -37,6 +51,20 @@
     jobs:
       - python-jobs
       - gate-{name}-docs
+
+
+- project:
+    name: python-ganttclient
+    github-org: openstack
+    node: precise
+    tarball-site: tarballs.openstack.org
+    doc-publisher-site: docs.openstack.org
+
+    jobs:
+      - python-jobs
+      - openstack-publish-jobs
+      - pypi-jobs
+
 
 - project:
     name: python-muranoclient
@@ -359,7 +387,6 @@
 
 - project:
     name: gearman-plugin
-    maven-group-id: org.jenkins-ci.plugins
     github-org: openstack-infra
     node: precise
     tarball-site: tarballs.openstack.org
@@ -369,7 +396,6 @@
 
 - project:
     name: clouddocs-maven-plugin
-    maven-group-id: com.rackspace.cloud.api
     github-org: stackforge
     node: precise
     tarball-site: tarballs.openstack.org
@@ -379,7 +405,6 @@
 
 - project:
     name: zmq-event-publisher
-    maven-group-id: org.jenkins-ci.plugins
     github-org: openstack-infra
     node: precise
     tarball-site: tarballs.openstack.org
@@ -1626,6 +1651,17 @@
       - hook-{name}-rtfd
 
 - project:
+    name: cliff
+    github-org: stackforge
+    node: precise
+    tarball-site: tarballs.openstack.org
+
+    jobs:
+      - python-jobs
+      - pypi-jobs
+      - hook-{name}-rtfd
+
+- project:
     name: python-tuskarclient
     github-org: openstack
     tarball-site: tarballs.openstack.org
@@ -1770,6 +1806,15 @@
       - python-jobs
 
 - project:
+    name: milk
+    github-org: stackforge
+    node: precise
+    tarball-site: tarballs.openstack.org
+
+    jobs:
+      - python-jobs
+
+- project:
     name: solum
     github-org: stackforge
     node: precise
@@ -1857,6 +1902,15 @@
 - project:
     name: release-tools
     github-org: openstack-infra
+    node: precise
+    tarball-site: tarballs.openstack.org
+
+    jobs:
+      - python-jobs
+
+- project:
+    name: entropy
+    github-org: stackforge
     node: precise
     tarball-site: tarballs.openstack.org
 
