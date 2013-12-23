@@ -236,7 +236,8 @@ class zuul (
   apache::vhost { $vhost_name:
     port     => 443,
     docroot  => 'MEANINGLESS ARGUMENT',
-    priority => '50',
+  # Using upstream apache
+  #  priority => '50',
     template => 'zuul/zuul.vhost.erb',
   }
   a2mod { 'rewrite':
