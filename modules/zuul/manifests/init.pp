@@ -238,7 +238,7 @@ class zuul (
     docroot  => 'MEANINGLESS ARGUMENT',
   # Using upstream apache
   #  priority => '50',
-    template => 'zuul/zuul.vhost.erb',
+    #conf_template => 'zuul/zuul.vhost.erb',
   }
   a2mod { 'rewrite':
     ensure => present,

@@ -32,6 +32,9 @@ class openstack_project::zuul_prod(
     job_name_in_report   => true,
     status_url           => 'http://status.openstack.org/zuul/',
     statsd_host          => $statsd_host,
+    jenkins_server       => $jenkins_server,
+    jenkins_user         => $jenkins_user,
+    jenkins_apikey       => $jenkins_apikey,
   }
 
   file { '/etc/zuul/layout.yaml':

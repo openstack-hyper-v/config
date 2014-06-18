@@ -10,6 +10,11 @@ server=<%= gerrit_server %>
 user=<%= gerrit_user %>
 sshkey=/var/lib/zuul/ssh/id_rsa
 
+[jenkins]
+server=<%= jenkins_server %>
+user=<%= jenkins_user %>
+apikey=<%= jenkins_apikey %>
+
 [zuul]
 layout_config=/etc/zuul/layout.yaml
 log_config=/etc/zuul/logging.conf

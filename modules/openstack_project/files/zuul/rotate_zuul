@@ -1,0 +1,8 @@
+#!/bin/bash
+
+LOGDIR="/var/log/zuul"
+
+if [ -d "$LOGDIR" ]
+then
+	find "$LOGDIR" -type f -regex ".*\.log\..*-[0-9]+$" -exec gzip {} \;
+fi
